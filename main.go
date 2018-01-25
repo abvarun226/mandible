@@ -11,8 +11,20 @@ import (
 	mandible "github.com/Imgur/mandible/server"
 )
 
+func path_exists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return true, err
+}
+
 func main() {
 	configFile := os.Getenv("MANDIBLE_CONF")
+	jpegMiniLicenseFile := os.Getenv("JPEGMINI_SETTINGS_FILE")
 
 	config := mandibleConf.NewConfiguration(configFile)
 
@@ -29,6 +41,13 @@ func main() {
 		log.Println("Stats init success")
 	} else {
 		stats = &mandible.DiscardStats{}
+	}
+
+	if config.JpegMiniEnabled {
+		if !(path_exists("/etc/jpegmini/jpegmini.cfg") || path_exists(jpegMiniLicenseFile)) {
+			log.Printf("JPEGMini is enabled, but license file does not exist")
+			os.Exit(1)
+		}
 	}
 
 	if os.Getenv("AUTHENTICATION_HMAC_KEY") != "" {

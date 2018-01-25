@@ -14,6 +14,8 @@ type Configuration struct {
 	Port            int
 	DatadogEnabled  bool
 	DatadogHostname string
+	JpegMiniEnabled bool
+	JpegMiniConfig  map[string]string
 }
 
 func NewConfiguration(path string) *Configuration {
