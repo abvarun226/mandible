@@ -95,8 +95,8 @@ var ThumbnailStrategy = func(cfg *config.Configuration, file *uploadedfile.Uploa
 }
 
 var JpegMiniStrategy = func(cfg *config.Configuration, file *uploadedfile.UploadedFile) (*ImageProcessor, error) {
-	processor := multiProcessType()
-	processor = append(processor, &JpegMiniOptimizer{})
+	processor := multiProcessType{}
+	processor = append(processor, &JpegMiniOptimizer{cfg.JpegMiniConfig["quality"], cfg.JpegMiniConfig["shc"]})
 	return &ImageProcessor{processor}, nil
 }
 

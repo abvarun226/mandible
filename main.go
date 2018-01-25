@@ -11,15 +11,15 @@ import (
 	mandible "github.com/Imgur/mandible/server"
 )
 
-func path_exists(path string) (bool, error) {
+func path_exists(path string) bool {
 	_, err := os.Stat(path)
 	if err == nil {
-		return true, nil
+		return true
 	}
 	if os.IsNotExist(err) {
-		return false, nil
+		return false
 	}
-	return true, err
+	return true
 }
 
 func main() {

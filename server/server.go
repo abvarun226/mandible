@@ -442,7 +442,7 @@ func (s *Server) Configure(muxer *http.ServeMux) {
 		upload.SetHash(imageID)
 		defer upload.Clean()
 
-		processor, _ := imageprocessor..ThumbnailStrategy(s.Config, upload)
+		processor, _ := imageprocessor.ThumbnailStrategy(s.Config, upload)
 		err = processor.Run(upload)
 		if err != nil {
 			log.Printf("Error processing %+v: %s", upload, err.Error())
@@ -457,7 +457,7 @@ func (s *Server) Configure(muxer *http.ServeMux) {
 		ts := upload.GetThumbs()
 		t := ts[0]
 
-		if s.Config.JpegMiniEnabled && upload.GetThumbs()[0].GetOutputFormat == "JPG" {
+		if s.Config.JpegMiniEnabled && t.GetOutputFormat(upload).ToString() == "JPG" {
 			processor, _ = imageprocessor.JpegMiniStrategy(s.Config, upload)
 			err = processor.Run(upload)
 			if err != nil {

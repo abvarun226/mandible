@@ -7,9 +7,9 @@ import (
 
 const JPEGMINI_COMMAND = "/usr/bin/jpegmini"
 
-func JpegMini(quality, shc int, path string) error {
-	shc_arg := fmt.Sprintf("-shc=%d", shc)
-	quality_arg := fmt.Sprintf("-qual=%d", quality)
+func JpegMini(quality, shc, path string) error {
+	shc_arg := fmt.Sprintf("-shc=%s", shc)
+	quality_arg := fmt.Sprintf("-qual=%s", quality)
 	in_file := fmt.Sprintf("-f=%s", path)
 	out_file := fmt.Sprintf("-o=%s_mini", path)
 
@@ -17,7 +17,7 @@ func JpegMini(quality, shc int, path string) error {
 		shc_arg,
 		quality_arg,
 		in_file,
-		out_file
+		out_file,
 	}
 
 	err := runProcessorCommand(JPEGMINI_COMMAND, args)
