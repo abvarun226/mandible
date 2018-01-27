@@ -2,6 +2,7 @@ package processorcommand
 
 import (
 	"fmt"
+	"log"
 	"os"
 )
 
@@ -25,13 +26,13 @@ func JpegMini(quality, shc, path string) error {
 	// if jpegmini cmd was successful
 	if err == nil {
 		// Overwrite thumb with jpegmini optimized image
-		err = os.Rename(out_file, in_file)
+		err = os.Rename(path+"_mini", path)
 		if err != nil {
-			fmt.Printf("JPEGMini error: error renaming file: %s", err.Error())
+			log.Printf("JPEGMini error: error renaming file: %s", err.Error())
 		}
 	} else {
 		// Dont fail the request even if jpegmini cmd fails
-		fmt.Printf("JPEGMini error while processing: %s", err.Error())
+		log.Printf("JPEGMini error while processing: %s", err.Error())
 	}
 
 	return nil
